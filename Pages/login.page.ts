@@ -1,5 +1,5 @@
 
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class LoginPage {
   readonly page: Page;
@@ -9,6 +9,11 @@ export class LoginPage {
   readonly errorMessage: Locator;
   readonly emptyMassage :Locator;
   readonly forgotPasswordLink :Locator;
+  readonly linkedLogo :Locator;
+  readonly FacebookLogo :Locator;
+  readonly twitterLogo: Locator;
+  readonly youtubeLogo: Locator;
+  readonly footer:Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -18,6 +23,11 @@ export class LoginPage {
     this.errorMessage = page.locator('.oxd-alert-content-text');
     this.emptyMassage=page.locator('.oxd-input-group__message');
     this.forgotPasswordLink=page.locator('.orangehrm-login-forgot-header');
+    this.linkedLogo=page.locator('a[href*="linkedin.com"]');
+    this.FacebookLogo=page.locator('a[href*="facebook.com"]');
+    this.twitterLogo = page.locator('a[href*="twittercom"]');
+    this.youtubeLogo = page.locator('a[href*="youtube.com"]');
+    this.footer=page.locator('.orangehrm-login-footer-sm');
   }
 //class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"
   async goto() {
@@ -41,5 +51,37 @@ export class LoginPage {
   getEmptyMessage():Locator{
     return this.emptyMassage;
   }
+  async clickLinkedInLogoAndVerify() {
+    const [newPage] = await Promise.all([
+      this.page.context().waitForEvent('page'),
+      this.linkedLogo.click()
+    ]);
+    await newPage.waitForLoadState();
+    expect(newPage.url()).toContain('linkedin.com');
+  }
   
+  async clickFacebookLogoAndVerify() {
+    const [newPage] = await Promise.all([
+      this.page.context().waitForEvent('page'),
+      this.FacebookLogo.click()
+    ]);
+    await newPage.waitForLoadState();
+    expect(newPage.url()).toContain('facebook.com');
+  }
+  async clicktwiterLogoAndVerify() {
+    const [newPage] = await Promise.all([
+      this.page.context().waitForEvent('page'),
+      this.twitterLogo.click()
+    ]);
+    await newPage.waitForLoadState();
+    expect(newPage.url()).toContain('twitter.com');
+  }
+  async clickYouTubeLogoAndVerify() {
+    const [newPage] = await Promise.all([
+      this.page.context().waitForEvent('page'),
+      this.youtubeLogo.click()
+    ]);
+    await newPage.waitForLoadState();
+    expect(newPage.url()).toContain('youtube.com');
+  }
 }
