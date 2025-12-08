@@ -87,4 +87,20 @@ test.describe('Orange HRM Login Tests', () => {
     await expect(loginPage.footer).toBeVisible();
     await page.screenshot({path:'screenshots/Verify login page footer icons is visible.png'});
    });
+   test('Click LinkedIn logo opens LinkedIn', async ({ page }) => {
+    await loginPage.clickLinkedInLogoAndVerify();
+    await page.screenshot({ path: 'screenshots/Click_LinkedIn.png' });
+  });
+  test('Click Facebook logo opens Facebook', async ({ page }) => {
+    await loginPage.clickFacebookLogoAndVerify();
+    await page.screenshot({ path: 'screenshots/Click_Facebook.png' });
+  });
+  test('Click Twitter logo opens Twitter', async ({ page }) => {
+    await loginPage.clicktwiterLogoAndVerify();
+    await page.screenshot({ path: 'screenshots/Click_Twitter.png' });
+  });
+  test('Click YouTube logo opens YouTube', async ({ page }) => {
+    await loginPage.clickYouTubeLogoAndVerify();
+    await page.screenshot({ path: 'screenshots/Click_YouTube.png' });
+  });
 });
