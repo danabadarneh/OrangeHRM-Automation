@@ -25,7 +25,7 @@ export class LoginPage {
     this.forgotPasswordLink=page.locator('.orangehrm-login-forgot-header');
     this.linkedLogo=page.locator('a[href*="linkedin.com"]');
     this.FacebookLogo=page.locator('a[href*="facebook.com"]');
-    this.twitterLogo = page.locator('a[href*="twittercom"]');
+    this.twitterLogo = page.locator('a[href*="twitter.com"]');
     this.youtubeLogo = page.locator('a[href*="youtube.com"]');
     this.footer=page.locator('.orangehrm-login-footer-sm');
   }
@@ -73,8 +73,8 @@ export class LoginPage {
       this.page.context().waitForEvent('page'),
       this.twitterLogo.click()
     ]);
-    await newPage.waitForLoadState();
-    expect(newPage.url()).toContain('twitter.com');
+    await newPage.waitForLoadState('load');
+    expect(newPage.url()).toContain('x.com');
   }
   async clickYouTubeLogoAndVerify() {
     const [newPage] = await Promise.all([
