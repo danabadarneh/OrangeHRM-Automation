@@ -70,5 +70,21 @@ test.describe('Orange HRM Login Tests', () => {
     await expect(page.locator('h6')).toHaveText('Reset Password');
     await page.screenshot({path:'screenshots/Verify navigation to Forgot Password page.png'});
    });
+   
+   test ('Verify password is masked',async({page})=>{
+    await loginPage.passwordInput.fill('admin123');
+    await expect(loginPage.passwordInput).toHaveAttribute('type', 'password');
+    await page.screenshot({path:'screenshots/Verify password is masked.png'});
+   });
 
+   test ('Verify username and password are cleared after refresh',async({page})=>{
+    await page.reload();
+    await expect(loginPage.usernameInput).toHaveValue('');
+    await expect(loginPage.passwordInput).toHaveValue('');
+    await page.screenshot({path:'screenshots/Verify username and password are cleared after refresh.png'});
+   });
+   test('Verify login page footer icons is visible',async({page})=>{
+    await expect(loginPage.footer).toBeVisible();
+    await page.screenshot({path:'screenshots/Verify login page footer icons is visible.png'});
+   });
 });
