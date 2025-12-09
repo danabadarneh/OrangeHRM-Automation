@@ -9,11 +9,13 @@ export class LoginPage {
   readonly errorMessage: Locator;
   readonly emptyMassage :Locator;
   readonly forgotPasswordLink :Locator;
+  readonly orangehrmlogo :Locator;
   readonly linkedLogo :Locator;
   readonly FacebookLogo :Locator;
   readonly twitterLogo: Locator;
   readonly youtubeLogo: Locator;
   readonly footer:Locator;
+ 
 
   constructor(page: Page) {
     this.page = page;
@@ -28,6 +30,8 @@ export class LoginPage {
     this.twitterLogo = page.locator('a[href*="twitter.com"]');
     this.youtubeLogo = page.locator('a[href*="youtube.com"]');
     this.footer=page.locator('.orangehrm-login-footer-sm');
+    
+
   }
 //class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"
   async goto() {
