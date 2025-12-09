@@ -103,4 +103,16 @@ test.describe('Orange HRM Login Tests', () => {
     await loginPage.clickYouTubeLogoAndVerify();
     await page.screenshot({ path: 'screenshots/Click_YouTube.png' });
   });
+  test('Verify placeholder text in username and password fields',async({page})=>{
+    await expect(loginPage.usernameInput).toHaveAttribute('placeholder', 'Username');
+    await expect(loginPage.passwordInput).toHaveAttribute('placeholder', 'Password');
+    await page.screenshot({path:'screenshots/Verify placeholder text in username and password fields.png'});
+  });
+  test('Verify Login button enable behavior',async({page})=>{
+    await expect(loginPage.loginButton).toBeEnabled();
+    await page.screenshot({path:'screenshots/Verify Login button enable behavior.png'});
+  });
+ 
+
+  
 });
