@@ -112,7 +112,12 @@ test.describe('Orange HRM Login Tests', () => {
     await expect(loginPage.loginButton).toBeEnabled();
     await page.screenshot({path:'screenshots/Verify Login button enable behavior.png'});
   });
- 
-
-  
+  test('Verify OrangeHRM logo is visible',async({page})=>{
+    await expect(loginPage.orangehrmlogo).toBeVisible();
+    await page.screenshot({path:'screenshots/Verify OrangeHRM logo is visible.png'});
+   });
+    test('Verify Login page title text',async({page})=>{
+      await expect(loginPage.title).toContainText('Login');
+      await page.screenshot({path:'screenshots/Verify Login page title text.png'});
+    });
 });

@@ -15,7 +15,7 @@ export class LoginPage {
   readonly twitterLogo: Locator;
   readonly youtubeLogo: Locator;
   readonly footer:Locator;
- 
+  readonly title :Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -30,7 +30,8 @@ export class LoginPage {
     this.twitterLogo = page.locator('a[href*="twitter.com"]');
     this.youtubeLogo = page.locator('a[href*="youtube.com"]');
     this.footer=page.locator('.orangehrm-login-footer-sm');
-    
+    this.orangehrmlogo=page.locator('.orangehrm-login-branding');
+    this.title=page.locator('.oxd-text.oxd-text--h5.orangehrm-login-title');
 
   }
 //class="oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message"
