@@ -1,21 +1,22 @@
-import { Page,Locator,expect } from "@playwright/test";
+import { Page } from '@playwright/test';
 
 export class BuzzPage {
- readonly page: Page;
- readonly textarea :Locator;
- readonly postbtn:Locator;
+  constructor(private page: Page) {}
 
-constructor (page:Page){
-    this.page = page;
-    this.textarea=page.locator('.oxd-buzz-post-input');
-    this.postbtn=page.locator('.oxd-button--main');
+  async createPost(text: string) {
+    // 1- اكتب داخل textarea
+    const textarea = this.page.locator('textarea[placeholder="What\'s on your mind?"]');
+    await textarea.click();
+    await textarea.fill(text);
 
-}
-async goto (){
-    await this.page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/buzz/viewBuzz');
-}
-async createpost(text: string) {
-    await this.textarea.fill(text);
-    await this.postbtn.click();
+    // 2- استنى ظهور زر Post
+    const postBtn = this.page.locator('button:has-text("Post")');
+    await postBtn.waitFor({ state: 'visible', timeout: 10000 });
+
+    // 3- اضغطي على زر Post
+    await postBtn.click();
+
+    // 4- استنى ظهور البوست الجديد
+    await this.page.waitForSelector(`text=${text}`, { timeout: 10000 });
   }
 }
