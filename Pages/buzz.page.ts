@@ -1,21 +1,28 @@
-import { Page,Locator,expect } from "@playwright/test";
+import { Page, expect } from '@playwright/test';
 
 export class BuzzPage {
- readonly page: Page;
- readonly textarea :Locator;
- readonly postbtn:Locator;
+  constructor(private page: Page) {}
 
-constructor (page:Page){
-    this.page = page;
-    this.textarea=page.locator('.oxd-buzz-post-input');
-    this.postbtn=page.locator('.oxd-button--main');
+  async openBuzz() {
+    await this.page.click('a[href="/web/index.php/buzz/viewBuzz"]');
+    await expect(this.page).toHaveURL(/buzz\/viewBuzz/);
+  }
 
-}
-async goto (){
-    await this.page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/buzz/viewBuzz');
-}
-async createpost(text: string) {
-    await this.textarea.fill(text);
-    await this.postbtn.click();
+  async createPost(text: string) {
+
+    const postCard = this.page.locator('.oxd-buzz-post');
+    await expect(postCard).toBeVisible({ timeout: 15000 });
+    await postCard.click();
+
+    const textarea = this.page.locator('textarea');
+    await expect(textarea).toBeVisible({ timeout: 15000 });
+    await textarea.fill(text);
+
+    const postBtn = this.page.locator('button[type="submit"]');
+    await expect(postBtn).toBeEnabled();
+    await postBtn.click();
+
+    const firstPost = this.page.locator('.orangehrm-buzz-post').first();
+    await expect(firstPost).toBeVisible({ timeout: 20000 });
   }
 }
