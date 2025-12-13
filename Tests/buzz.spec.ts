@@ -1,25 +1,20 @@
-import { test, expect } from '@playwright/test';
-import { BuzzPage } from '../Pages/buzz.page';
+import { test } from '@playwright/test';
 import { LoginPage } from '../Pages/login.page';
+import { BuzzPage } from '../Pages/buzz.page';
 
+let login: LoginPage;
+let buzz: BuzzPage;
 
+test.beforeEach(async ({ page }) => {
+  login = new LoginPage(page);
+  buzz = new BuzzPage(page);
 
-test.describe('Orange HRM Login Tests', () => {
+  await login.goto();
+  await login.login('Admin', 'admin123');
+  await buzz.openBuzz();
+});
 
-
-    let buzzpage: BuzzPage;
-    let loginPage: LoginPage;
-  
-    test.beforeEach(async ({ page }) => {
-      buzzpage = new BuzzPage(page);
-      await buzzpage.goto();
-    });
- 
-
- test('Verify the post button is visible',async({page})=>{
-  await expect(buzzpage.postbtn).toBeVisible();
-  await page.screenshot({ path: 'screenshots/Verify the post button is visible.png', fullPage: true });
- });
-  
-
+test('Create a new post via UI', async ({ page }) => {
+  const postText = `Hello from Playwright ${Date.now()}`;
+  await buzz.createPost(postText);
 });
