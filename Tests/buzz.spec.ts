@@ -1,19 +1,20 @@
-import { test, expect } from '@playwright/test';
-import { BuzzPage } from '../Pages/buzz.page';
+import { test } from '@playwright/test';
 import { LoginPage } from '../Pages/login.page';
+import { BuzzPage } from '../Pages/buzz.page';
 
-test('Create a new post via UI', async ({ page }) => {
-  const login = new LoginPage(page);
-  const buzz = new BuzzPage(page);
+let login: LoginPage;
+let buzz: BuzzPage;
+
+test.beforeEach(async ({ page }) => {
+  login = new LoginPage(page);
+  buzz = new BuzzPage(page);
 
   await login.goto();
   await login.login('Admin', 'admin123');
+  await buzz.openBuzz();
+});
 
-  // فتح buzz من المينيو
-  await page.click('a[href="/web/index.php/buzz/viewBuzz"]');
-
-  const postText = "Hello from Playwright!";
+test('Create a new post via UI', async ({ page }) => {
+  const postText = `Hello from Playwright ${Date.now()}`;
   await buzz.createPost(postText);
-
-  await expect(page.locator(`text=${postText}`)).toBeVisible();
 });

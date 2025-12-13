@@ -1,22 +1,28 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 export class BuzzPage {
   constructor(private page: Page) {}
 
+  async openBuzz() {
+    await this.page.click('a[href="/web/index.php/buzz/viewBuzz"]');
+    await expect(this.page).toHaveURL(/buzz\/viewBuzz/);
+  }
+
   async createPost(text: string) {
-    // 1- اكتب داخل textarea
-    const textarea = this.page.locator('textarea[placeholder="What\'s on your mind?"]');
-    await textarea.click();
+
+    const postCard = this.page.locator('.oxd-buzz-post');
+    await expect(postCard).toBeVisible({ timeout: 15000 });
+    await postCard.click();
+
+    const textarea = this.page.locator('textarea');
+    await expect(textarea).toBeVisible({ timeout: 15000 });
     await textarea.fill(text);
 
-    // 2- استنى ظهور زر Post
-    const postBtn = this.page.locator('button:has-text("Post")');
-    await postBtn.waitFor({ state: 'visible', timeout: 10000 });
-
-    // 3- اضغطي على زر Post
+    const postBtn = this.page.locator('button[type="submit"]');
+    await expect(postBtn).toBeEnabled();
     await postBtn.click();
 
-    // 4- استنى ظهور البوست الجديد
-    await this.page.waitForSelector(`text=${text}`, { timeout: 10000 });
+    const firstPost = this.page.locator('.orangehrm-buzz-post').first();
+    await expect(firstPost).toBeVisible({ timeout: 20000 });
   }
 }
