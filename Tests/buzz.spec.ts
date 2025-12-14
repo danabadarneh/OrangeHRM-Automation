@@ -17,4 +17,6 @@ test.beforeEach(async ({ page }) => {
 test('Create a new post via UI', async ({ page }) => {
   const postText = `Hello from Playwright ${Date.now()}`;
   await buzz.createPost(postText);
+  await page.screenshot({path:'screenshots/Create a new post via UI.png'});
+
 });
