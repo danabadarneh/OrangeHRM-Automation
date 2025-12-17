@@ -24,6 +24,5 @@ export class BuzzPage {
 
     const firstPost = this.page.locator('.orangehrm-buzz-post').first();
     await expect(firstPost).toBeVisible({ timeout: 20000 });
-    
   }
 }
