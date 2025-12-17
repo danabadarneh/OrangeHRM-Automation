@@ -35,6 +35,7 @@ npx playwright install
 2. Run the tests:
 
  -->  npx playwright test
+ -->npx playwright test Tests/buzz.spec.ts --headed
 
 
 This will open a browser and execute the login automation tests.
